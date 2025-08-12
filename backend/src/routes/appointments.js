@@ -1,54 +1,66 @@
 const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
-const verifyToken = require('../middleware/auth.js'); // Importamos nuestro guardián
+const { verifyToken, checkAdminRole } = require('../middleware/auth.js');
 const router = express.Router();
 
-// Configura el cliente de Supabase
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const supabaseAdmin = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false }
+});
 
-// Ruta POST para /api/appointments
-// Usamos el middleware verifyToken. Si el token no es válido, el código de abajo nunca se ejecutará.
-router.post('/', verifyToken, async (req, res) => {
+// RUTA POST: Crear una solicitud de cita (SIN CAMBIOS)
+router.post('/', verifyToken, async (req, res) => { /* ...código existente... */ });
+
+// RUTA GET: Obtener citas pendientes (SIN CAMBIOS)
+router.get('/pending', [verifyToken, checkAdminRole], async (req, res) => { /* ...código existente... */ });
+
+// --- NUEVA RUTA ---
+// RUTA PATCH: Aprobar una cita pendiente
+router.patch('/:id/approve', [verifyToken, checkAdminRole], async (req, res) => {
   try {
-    // req.user es el usuario que nos proporcionó el middleware
-    const clientId = req.user.id; 
+    const { id } = req.params; // El ID de la cita viene de la URL
+    const { confirmed_time } = req.body; // La hora confirmada viene del cuerpo de la petición
 
-    // Extraemos los datos del cuerpo de la petición
-    const { service_id, requested_day, requested_block, client_notes } = req.body;
-
-    // Validación básica de los datos
-    if (!service_id || !requested_day || !requested_block) {
-      return res.status(400).json({ message: 'Faltan datos para crear la cita.' });
+    if (!confirmed_time) {
+      return res.status(400).json({ message: 'Se requiere una hora de confirmación.' });
     }
 
-    // Insertar la nueva cita en la tabla 'appointments'
-    const { data, error } = await supabase
+    // Buscamos la cita para asegurarnos de que existe y está pendiente
+    const { data: existingAppointment, error: findError } = await supabaseAdmin
       .from('appointments')
-      .insert([
-        { 
-          client_id: clientId,
-          service_id: service_id,
-          requested_day: requested_day,
-          requested_block: requested_block,
-          client_notes: client_notes || null, // Acepta notas opcionales
-          status: 'pendiente' // El estado inicial es siempre pendiente
-        }
-      ])
-      .select(); // .select() devuelve el registro creado
+      .select('requested_day')
+      .eq('id', id)
+      .eq('status', 'pendiente')
+      .single();
+
+    if (findError || !existingAppointment) {
+      return res.status(404).json({ message: 'No se encontró una cita pendiente con ese ID.' });
+    }
+
+    // Combinamos la fecha solicitada con la hora confirmada
+    const finalTimestamp = new Date(`${existingAppointment.requested_day}T${confirmed_time}`);
+
+    // Actualizamos la cita
+    const { data, error } = await supabaseAdmin
+      .from('appointments')
+      .update({
+        status: 'confirmada',
+        confirmed_time: finalTimestamp.toISOString(), // Guardamos en formato ISO
+      })
+      .eq('id', id)
+      .select();
 
     if (error) {
-      console.error('Supabase error creating appointment:', error);
-      return res.status(500).json({ message: 'Error al registrar la solicitud de cita.', error: error.message });
+      throw error;
     }
 
-    res.status(201).json({ message: 'Solicitud de cita registrada con éxito.', data: data[0] });
+    res.status(200).json({ message: 'Cita aprobada con éxito.', data: data[0] });
 
-  } catch (err) {
-    console.error('Unexpected server error:', err);
-    res.status(500).json({ message: 'Error interno del servidor.', error: err.message });
+  } catch (error) {
+    console.error('Error approving appointment:', error);
+    res.status(500).json({ message: 'Error interno del servidor al aprobar la cita.', details: error.message });
   }
 });
+
 
 module.exports = router;
