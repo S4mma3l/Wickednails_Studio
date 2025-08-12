@@ -1,0 +1,100 @@
+.availability-container {
+  background-color: var(--surface-color);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.availability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid var(--text-secondary);
+  color: var(--text-secondary);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendar-header {
+  font-family: var(--font-headings);
+  color: var(--text-secondary);
+  text-align: center;
+  padding-bottom: 10px;
+  font-size: 0.9em;
+}
+
+.calendar-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+
+.calendar-day.available {
+  color: var(--text-primary);
+  background-color: #2a2a2a;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.calendar-day.available:hover {
+  border-color: var(--secondary-accent);
+}
+
+.calendar-day.selected {
+  background-color: var(--primary-accent);
+  color: var(--background-dark);
+  border-color: var(--primary-accent);
+}
+
+.time-blocks {
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid #333;
+  padding-top: 2rem;
+}
+
+.time-block-button {
+  background-color: transparent;
+  border: 1px solid var(--primary-accent);
+  color: var(--primary-accent);
+  padding: 10px 30px;
+  margin: 0 10px;
+  border-radius: 5px;
+  font-family: var(--font-headings);
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.time-block-button:hover {
+  background-color: var(--primary-accent);
+  color: var(--background-dark);
+  box-shadow: 0 0 10px rgba(154, 121, 221, 0.5);
+}

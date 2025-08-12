@@ -1,0 +1,130 @@
+/* 1. Definición de la Paleta de Colores y Tipografías */
+:root {
+  --background-dark: #121212;
+  --surface-color: #1e1e1e;
+  --primary-accent: #9a79dd;
+  --secondary-accent: #c5a53d;
+  
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+
+  --color-success: #32de84;
+  --color-error: #e94560;
+
+  --font-headings: 'Cinzel', serif;
+  --font-body: 'Lora', serif;
+}
+
+/* 2. Reseteo y Estilos Base */
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+}
+
+/* 3. Estilos Globales de Texto y Títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+  color: var(--text-primary);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+p {
+  line-height: 1.6;
+}
+
+a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--secondary-accent);
+}
+
+/* 4. Estilo de Contenedor de Formularios */
+.form-container {
+  background-color: var(--surface-color);
+  padding: 2.5rem 3.5rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  max-width: 450px;
+  margin: 2rem auto;
+  box-shadow: 0 0 25px rgba(154, 121, 221, 0.1);
+}
+
+/* 5. Estilos para Inputs y Botones */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--text-secondary);
+  padding: 12px 5px;
+  margin-bottom: 20px;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-bottom-color: var(--primary-accent);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-family: var(--font-headings);
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: var(--background-dark);
+  background: linear-gradient(45deg, var(--primary-accent), #7f5eb5);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: var(--secondary-accent);
+  box-shadow: 0 0 15px rgba(197, 165, 61, 0.5);
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:disabled {
+  background: #444;
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* 6. Estilos para Mensajes y Links de Formulario */
+.form-message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+}
+.form-message.success {
+  color: var(--color-success);
+}
+.form-message.error {
+  color: var(--color-error);
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-secondary);
+}

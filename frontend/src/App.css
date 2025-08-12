@@ -1,0 +1,108 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #61dafb;
+}
+
+input {
+  padding: 8px;
+  margin: 5px;
+  width: 250px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: var(--surface-color);
+  padding: 15px 0;
+  color: var(--text-primary);
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.service-card {
+  background-color: var(--surface-color);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-accent);
+  box-shadow: 0 5px 20px rgba(154, 121, 221, 0.2);
+}
+
+.service-card h3 {
+  margin-top: 0;
+  color: var(--primary-accent);
+  font-size: 1.4em;
+}
+
+.service-card p {
+  flex-grow: 1; /* Hace que la descripción ocupe el espacio disponible */
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.service-price {
+  color: var(--secondary-accent);
+  font-size: 1.2em;
+}
+
+.service-duration {
+  color: var(--text-secondary);
+}
+
+/* --- FIN DE NUEVOS ESTILOS --- */
