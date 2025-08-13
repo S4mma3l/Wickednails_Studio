@@ -1,28 +1,26 @@
-/* 1. Definición de la Paleta de Colores y Tipografías */
+/* 1. Paleta de Colores y Tipografías */
 :root {
   --background-dark: #121212;
   --surface-color: #1e1e1e;
   --primary-accent: #9a79dd;
   --secondary-accent: #c5a53d;
-  
   --text-primary: #e0e0e0;
   --text-secondary: #a0a0a0;
-
   --color-success: #32de84;
   --color-error: #e94560;
-
   --font-headings: 'Cinzel', serif;
   --font-body: 'Lora', serif;
 }
 
-/* 2. Reseteo y Estilos Base */
+/* 2. Estilos Base con Transiciones Globales */
 body {
   margin: 0;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-dark);
+  background: linear-gradient(180deg, #181818 0%, #121212 100%);
   color: var(--text-primary);
+  min-height: 100vh;
 }
 
 /* 3. Estilos Globales de Texto y Títulos */
@@ -48,18 +46,18 @@ a:hover {
   color: var(--secondary-accent);
 }
 
-/* 4. Estilo de Contenedor de Formularios */
-.form-container {
+/* 4. Contenedor de "Cartas" y Formularios */
+.card-container {
   background-color: var(--surface-color);
-  padding: 2.5rem 3.5rem;
+  padding: 2rem 3rem;
   border-radius: 8px;
-  border: 1px solid #333;
+  border: 1px solid #282828;
   max-width: 450px;
   margin: 2rem auto;
-  box-shadow: 0 0 25px rgba(154, 121, 221, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* 5. Estilos para Inputs y Botones */
+/* 5. Formularios Optimizados */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -72,7 +70,7 @@ input[type="password"] {
   font-family: var(--font-body);
   color: var(--text-primary);
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 input[type="text"]:focus,
@@ -80,37 +78,12 @@ input[type="email"]:focus,
 input[type="password"]:focus {
   outline: none;
   border-bottom-color: var(--primary-accent);
+  box-shadow: 0 5px 15px -5px rgba(154, 121, 221, 0.3);
 }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  font-family: var(--font-headings);
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: var(--background-dark);
-  background: linear-gradient(45deg, var(--primary-accent), #7f5eb5);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+/* SECCIÓN DE BOTONES ANTIGUA ELIMINADA */
 
-button[type="submit"]:hover:not(:disabled) {
-  background-color: var(--secondary-accent);
-  box-shadow: 0 0 15px rgba(197, 165, 61, 0.5);
-  transform: translateY(-2px);
-}
-
-button[type="submit"]:disabled {
-  background: #444;
-  box-shadow: none;
-  transform: none;
-  cursor: not-allowed;
-}
-
-/* 6. Estilos para Mensajes y Links de Formulario */
+/* 6. Mensajes y Links de Formulario */
 .form-message {
   text-align: center;
   margin-top: 15px;

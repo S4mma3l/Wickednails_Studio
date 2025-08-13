@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import Modal from '../components/Modal';
-import { Link } from 'react-router-dom'; // Importamos Link
+import { Link } from 'react-router-dom';
+import MaterialButton from '../components/MaterialButton'; // Importamos el nuevo botón
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -22,9 +23,7 @@ function RegisterPage() {
     setLoading(true);
     setMessage('');
     const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName, phone } },
+      email, password, options: { data: { full_name: fullName, phone } },
     });
     if (error) {
       setMessage(`Error: ${error.message}`);
@@ -35,46 +34,42 @@ function RegisterPage() {
   };
 
   return (
-    <div className="form-container">
+    <div className="card-container">
       <h2>Crear Cuenta</h2>
       <form onSubmit={handleRegister}>
         <input type="text" placeholder="Nombre Completo" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
         <input type="text" placeholder="Teléfono (con prefijo)" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         <input type="email" placeholder="Correo Electrónico" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="Contraseña (mínimo 6 caracteres)" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        
         <div style={{ textAlign: 'center', margin: '15px 0', color: 'var(--text-secondary)' }}>
           <input 
             type="checkbox" 
             id="terms" 
             checked={termsAccepted} 
-            onChange={(e) => setTermsAccepted(e.target.checked)}
-            style={{ marginRight: '10px', cursor: 'pointer' }}
+            onChange={(e) => setTermsAccepted(e.target.checked)} 
+            style={{ marginRight: '10px', cursor: 'pointer' }} 
           />
           <label htmlFor="terms">
             Acepto los{' '}
-            <button type="button" className="link-style" onClick={() => setIsTermsModalOpen(true)}>
+            <button 
+              type="button" 
+              className="link-style" 
+              onClick={() => setIsTermsModalOpen(true)}
+            >
               Términos y Condiciones
             </button>
           </label>
         </div>
-        
-        <button type="submit" disabled={loading || !termsAccepted}>
-          {loading ? 'Creando...' : 'Crear Cuenta'}
-        </button>
+        <div style={{marginTop: '1.5rem'}}>
+            <MaterialButton type="submit" disabled={loading || !termsAccepted} fullWidth>
+                {loading ? 'Creando...' : 'Crear Cuenta'}
+            </MaterialButton>
+        </div>
       </form>
-      
-      {message && (
-        <p className={`form-message ${message.startsWith('Error') ? 'error' : 'success'}`}>
-          {message}
-        </p>
-      )}
-
+      {message && <p className={`form-message ${message.startsWith('Error') ? 'error' : 'success'}`}>{message}</p>}
       <p className="form-footer">
         ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
       </p>
-
-      {/* El componente Modal no necesita cambios */}
       <Modal isOpen={isTermsModalOpen} onClose={() => setIsTermsModalOpen(false)}>
         <>
           <h2>Términos y Condiciones de Uso</h2>

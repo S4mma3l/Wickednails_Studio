@@ -3,47 +3,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-  margin-bottom: 2rem;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-}
-
-nav a:hover {
-  color: #61dafb;
-}
-
-input {
-  padding: 8px;
-  margin: 5px;
-  width: 250px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #61dafb;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-header {
   background-color: var(--surface-color);
   padding: 15px 0;
   color: var(--text-primary);
@@ -83,7 +42,7 @@ button:disabled {
 }
 
 .service-card p {
-  flex-grow: 1; /* Hace que la descripción ocupe el espacio disponible */
+  flex-grow: 1;
   color: var(--text-secondary);
   margin-bottom: 1rem;
 }
@@ -105,9 +64,6 @@ button:disabled {
   color: var(--text-secondary);
 }
 
-/* --- FIN DE NUEVOS ESTILOS --- */
-
-/* --- INICIO DE NUEVOS ESTILOS PARA EL PANEL DE ADMIN --- */
 .admin-dashboard-container {
     width: 100%;
     max-width: 1200px;
@@ -158,6 +114,9 @@ button:disabled {
     font-weight: bold;
     transition: all 0.2s ease;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 .admin-button.approve {
     background-color: var(--color-success);
@@ -173,4 +132,79 @@ button:disabled {
 .admin-button.reject:hover {
     filter: brightness(1.2);
 }
-/* --- FIN DE NUEVOS ESTILOS --- */
+
+.history-container {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #333;
+}
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.history-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--surface-color);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-accent);
+}
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-family: var(--font-headings);
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+.status-badge.pendiente {
+  background-color: var(--secondary-accent);
+  color: var(--background-dark);
+}
+.status-badge.confirmada {
+  background-color: var(--color-success);
+  color: var(--background-dark);
+}
+.status-badge.rechazada {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.tabs-nav {
+  display: flex;
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+}
+.tab-button {
+  font-family: var(--font-headings);
+  font-size: 1.1em;
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.tab-button:after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.tab-button.active {
+  color: var(--text-primary);
+}
+.tab-button.active:after {
+  transform: scaleX(1);
+}

@@ -1,0 +1,76 @@
+.material-button {
+  width: 100%;
+  padding: 10px 24px;
+  font-family: var(--font-headings);
+  font-weight: bold;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative; /* Clave para el posicionamiento del ripple */
+  overflow: hidden;   /* Clave para contener el ripple */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.material-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* --- ESTILOS PARA EL RIPPLE EFFECT --- */
+.material-button .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6); /* Color de la onda */
+  transform: scale(0);
+  animation: ripple 600ms linear;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+/* --- FIN DE ESTILOS RIPPLE --- */
+
+
+.material-button:disabled {
+  background-color: #444 !important;
+  color: #888 !important;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.material-button.primary {
+  background-color: var(--primary-accent);
+  color: #fff;
+}
+
+.material-button.secondary {
+  background-color: transparent;
+  color: var(--primary-accent);
+  border: 1px solid #333;
+}
+.material-button.secondary:hover:not(:disabled) {
+    background-color: rgba(154, 121, 221, 0.1);
+    border-color: var(--primary-accent);
+}
+
+.material-button.success {
+  background-color: var(--color-success);
+  color: var(--background-dark);
+}
+
+.material-button.danger {
+  background-color: var(--color-error);
+  color: #fff;
+}
+
+.material-button.full-width {
+  width: 100%;
+}

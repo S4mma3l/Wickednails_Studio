@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useNavigate, Link } from 'react-router-dom';
+import MaterialButton from '../components/MaterialButton'; // Importamos el nuevo botón
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,23 +14,17 @@ function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setMessage(`Error: Usuario o contraseña incorrectos.`);
       setLoading(false);
     } else {
-      // La redirección y actualización del estado se manejan en AuthContext y App.js
       navigate('/dashboard');
     }
   };
 
   return (
-    <div className="form-container">
+    <div className="card-container">
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleLogin}>
         <input 
@@ -46,13 +41,13 @@ function LoginPage() {
           onChange={(e) => setPassword(e.target.value)} 
           required 
         />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Entrando...' : 'Entrar'}
-        </button>
+        <div style={{marginTop: '1.5rem'}}>
+          <MaterialButton type="submit" disabled={loading} fullWidth>
+            {loading ? 'Verificando...' : 'Entrar'}
+          </MaterialButton>
+        </div>
       </form>
-
       {message && <p className="form-message error">{message}</p>}
-
       <p className="form-footer">
         ¿Aún no tienes una cuenta? <Link to="/register">Regístrate aquí</Link>
       </p>

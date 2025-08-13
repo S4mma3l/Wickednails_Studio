@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Modal from './Modal'; // Reutilizamos nuestro componente de Modal
+import Modal from './Modal';
+import MaterialButton from './MaterialButton'; // Importamos el nuevo botón
 
 function ApproveModal({ isOpen, onClose, onSubmit, loading }) {
   const [time, setTime] = useState('10:00');
@@ -33,13 +34,13 @@ function ApproveModal({ isOpen, onClose, onSubmit, loading }) {
           />
         </div>
         
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-          <button type="button" className="admin-button reject" onClick={onClose}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '2rem' }}>
+          <MaterialButton onClick={onClose} variant="secondary">
             Cancelar
-          </button>
-          <button type="submit" className="admin-button approve" disabled={loading}>
+          </MaterialButton>
+          <MaterialButton type="submit" disabled={loading} variant="success">
             {loading ? 'Aprobando...' : 'Aprobar y Confirmar'}
-          </button>
+          </MaterialButton>
         </div>
       </form>
     </Modal>
