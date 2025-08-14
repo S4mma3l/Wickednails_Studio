@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import './AvailabilitySelector.css';
 
 function AvailabilitySelector({ service, onBack, onBookingComplete }) {
-  const { session } = useAuth(); // Obtenemos la sesión para acceder al token
+  const { session } = useAuth();
   const [availability, setAvailability] = useState({});
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -15,7 +15,7 @@ function AvailabilitySelector({ service, onBack, onBookingComplete }) {
     const fetchAvailability = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3001/api/availability');
+        const response = await fetch('http://localhost:3001/api/availability/');
         if (!response.ok) throw new Error('Error al cargar la disponibilidad.');
         const data = await response.json();
         setAvailability(data);
@@ -49,7 +49,7 @@ function AvailabilitySelector({ service, onBack, onBookingComplete }) {
       const result = await response.json();
       if (!response.ok) throw new Error(result.message || 'Error al enviar la solicitud.');
       
-      onBookingComplete(); // Notifica al componente padre que todo fue bien
+      onBookingComplete();
     
     } catch (err) {
       setError(err.message);
@@ -87,6 +87,8 @@ function AvailabilitySelector({ service, onBack, onBookingComplete }) {
         <h2>Elige un Día</h2>
       </div>
       {loading && <p>Consultando agenda...</p>}
+      {error && <p className="form-message error">{error}</p>}
+      
       {!loading && !error && (
         <>
           <h3>{currentMonth.toLocaleString('es-ES', { month: 'long', year: 'numeric' })}</h3>
@@ -96,8 +98,10 @@ function AvailabilitySelector({ service, onBack, onBookingComplete }) {
           </div>
           {selectedDate && availability[selectedDate] && (
             <div className="time-blocks">
-              <h4>Elige un bloque para el {selectedDate}:</h4>
-              {availability[selectedDate].map(block => (
+              <h4>Bloques disponibles para el {selectedDate}:</h4>
+              {/* --- LA CORRECCIÓN CLAVE ESTÁ AQUÍ --- */}
+              {/* Usamos Object.keys() para obtener un array con los nombres de los bloques */}
+              {Object.keys(availability[selectedDate]).map(block => (
                 <button key={block} className="time-block-button" onClick={() => handleBlockClick(block)} disabled={booking}>
                   {booking ? 'Enviando...' : block}
                 </button>

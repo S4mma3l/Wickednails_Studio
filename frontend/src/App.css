@@ -208,3 +208,74 @@
 .tab-button.active:after {
   transform: scaleX(1);
 }
+
+/* --- ESTILOS PARA REACT-BIG-CALENDAR --- */
+@import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+.rbc-calendar {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #333;
+}
+.rbc-toolbar {
+  font-family: var(--font-headings);
+  margin-bottom: 1.5rem;
+}
+.rbc-toolbar .rbc-toolbar-label {
+  font-size: 1.5em;
+  color: var(--text-primary);
+}
+.rbc-btn-group button {
+  color: var(--text-primary) !important;
+  transition: all 0.3s ease;
+  border: 1px solid #444 !important;
+}
+.rbc-btn-group button:hover, .rbc-btn-group button:focus {
+  background-color: var(--primary-accent) !important;
+  color: var(--background-dark) !important;
+  border-color: var(--primary-accent) !important;
+}
+.rbc-btn-group button.rbc-active {
+  background-color: var(--primary-accent) !important;
+  color: var(--background-dark) !important;
+  box-shadow: none !important;
+}
+.rbc-event {
+  background-color: var(--primary-accent) !important;
+  border: 1px solid #7f5eb5 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  font-size: 0.9em !important;
+}
+.rbc-event.pending {
+  background-color: var(--secondary-accent) !important;
+  border: 1px solid #a38732 !important;
+}
+.rbc-day-bg.rbc-today {
+  background-color: rgba(154, 121, 221, 0.1);
+}
+.rbc-time-content, .rbc-time-gutter, .rbc-time-header-gutter, .rbc-timeslot-group {
+  border-color: #333 !important;
+}
+.rbc-header {
+  border-bottom: 1px solid #444;
+  color: var(--text-secondary);
+}
+.rbc-time-slot {
+  border-top: 1px solid #282828 !important;
+}
+
+/* --- NUEVO ESTILO PARA SERVICIOS NO DISPONIBLES --- */
+.service-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #333;
+}
+
+.service-card.disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #333;
+}
