@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import MaterialButton from './MaterialButton';
 
 const formatDate = (dateString) => {
   if (!dateString) return '';
@@ -12,6 +13,7 @@ function AppointmentHistory() {
   const { session } = useAuth();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(null); // Para saber qué cita se está procesando
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -33,6 +35,31 @@ function AppointmentHistory() {
     fetchHistory();
   }, [session]);
 
+  const handleCancel = async (appointmentId) => {
+    const confirmationText = "Atención: Si cancelas con menos de 24 horas de antelación, se aplicará un cargo a tu cuenta que deberás abonar en tu próxima visita.\n\n¿Estás segura de que quieres cancelar esta cita?";
+    if (window.confirm(confirmationText)) {
+      setActionLoading(appointmentId);
+      try {
+        const response = await fetch(`http://localhost:3001/api/appointments/${appointmentId}/cancel`, {
+            method: 'PATCH',
+            headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || 'Error al cancelar la cita.');
+        
+        // Actualizamos el estado local para que el cambio se vea al instante
+        setHistory(prevHistory => prevHistory.map(app => 
+            app.id === appointmentId ? { ...app, status: 'cancelada' } : app
+        ));
+
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setActionLoading(null);
+      }
+    }
+  };
+
   if (loading) return <p>Cargando tu historial...</p>;
 
   return (
@@ -51,6 +78,17 @@ function AppointmentHistory() {
                 </small>
               </div>
               <span className={`status-badge ${app.status}`}>{app.status}</span>
+              <div style={{textAlign: 'right'}}>
+                {app.status === 'confirmada' && (
+                  <MaterialButton 
+                    variant="danger" 
+                    onClick={() => handleCancel(app.id)}
+                    disabled={actionLoading === app.id}
+                  >
+                    {actionLoading === app.id ? 'Cancelando...' : 'Cancelar Cita'}
+                  </MaterialButton>
+                )}
+              </div>
             </div>
           ))}
         </div>

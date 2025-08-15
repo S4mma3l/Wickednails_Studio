@@ -279,3 +279,10 @@
   box-shadow: none;
   border-color: #333;
 }
+
+/* --- NUEVA REGLA DE ESTILO --- */
+.status-badge.cancelada {
+  background-color: #555;
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
